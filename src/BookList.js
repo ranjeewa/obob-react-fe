@@ -1,31 +1,26 @@
 import React, { Component } from 'react';
 
-class BookList extends Component {
+import BookRow from './BookRow';
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedBooks : [],
-        }
-    }
+class BookList extends Component {
 
     toggleBook(id) {
         let newBooks;
-        if (this.state.selectedBooks.includes(id))
-            newBooks = this.state.selectedBooks.filter(book => book !== id);
+        if (this.props.selectedBooks.includes(id))
+            newBooks = this.props.selectedBooks.filter(book => book !== id);
         else
-            newBooks = this.state.selectedBooks.concat(id);
-        this.setState({selectedBooks: newBooks});
+            newBooks = this.props.selectedBooks.concat(id);
+        this.props.changeSelection(newBooks);
     }
+
 
     render() {
 
         const bookRows = this.props.allBooks.map((book, idx) => (
-            <tr key={book.id} onClick={() => this.toggleBook(book.id)}
-                className={this.state.selectedBooks.includes(book.id) ? "positive" : null} >
-                <td>{book.name}</td>
-                <td>{book.author}</td>
-            </tr>
+            <BookRow key={idx}
+                     book={book}
+                     selectedBooks={this.props.selectedBooks}
+                     toggleBook={() => this.toggleBook(book.id)} />
         ));
 
         return (
