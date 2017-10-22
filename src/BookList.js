@@ -4,22 +4,45 @@ import BookRow from './BookRow';
 
 class BookList extends Component {
 
+    state = {
+      selectedBooks : [],
+    };
+
     toggleBook(id) {
         let newBooks;
-        if (this.props.selectedBooks.includes(id))
-            newBooks = this.props.selectedBooks.filter(book => book !== id);
+        if (this.state.selectedBooks.includes(id))
+            newBooks = this.state.selectedBooks.filter(book => book !== id);
         else
-            newBooks = this.props.selectedBooks.concat(id);
-        this.props.changeSelection(newBooks);
+            newBooks = this.state.selectedBooks.concat(id);
+        this.setState({
+            selectedBooks: newBooks,
+        });
     }
 
+    loadQuestions() {
+        this.props.changeSelection(this.state.selectedBooks);
+    }
+
+    clearSelections() {
+        this.setState({
+            selectedBooks : [],
+        });
+    }
+
+    selectAllBooks() {
+        this.setState({
+            selectedBooks : this.props.allBooks.map((book, idx) => {
+                return book.id
+            }),
+        });
+    }
 
     render() {
 
         const bookRows = this.props.allBooks.map((book, idx) => (
             <BookRow key={idx}
                      book={book}
-                     selectedBooks={this.props.selectedBooks}
+                     selectedBooks={this.state.selectedBooks}
                      toggleBook={() => this.toggleBook(book.id)} />
         ));
 
@@ -36,7 +59,19 @@ class BookList extends Component {
                     {bookRows}
                     </tbody>
                 </table>
+                <div className="Button-row">
+                    <button className="ui button" onClick={() => this.selectAllBooks()}>
+                        Select All
+                    </button>
+                    <button className="ui primary button" onClick={() => this.loadQuestions()}>
+                        Load Questions
+                    </button>
+                    <button className="ui button" onClick={() => this.clearSelections()}>
+                        Clear Selection
+                    </button>
+                </div>
             </div>
+
         );
     }
 

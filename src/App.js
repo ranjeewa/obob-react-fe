@@ -7,7 +7,7 @@ class App extends Component {
 
     state  = {
         allBooks : [],
-        selectedBooks : [],
+        questionIds: [],
     };
 
     constructor(props) {
@@ -24,27 +24,7 @@ class App extends Component {
     }
 
     changeSelectedBooks = (books) => {
-        this.setState({
-            selectedBooks : books,
-        });
-    }
-
-    loadQuestions() {
-        console.log(this.state.selectedBooks);
-    }
-
-    clearSelections() {
-        this.setState({
-            selectedBooks : [],
-        });
-    }
-
-    selectAllBooks() {
-        this.setState({
-            selectedBooks : this.state.allBooks.map((book, idx) => {
-                return book.id
-            }),
-        });
+        console.log(books);
     }
 
     render() {
@@ -56,19 +36,7 @@ class App extends Component {
                 </p>
                 <div className="ui text container">
                     <BookList allBooks={this.state.allBooks}
-                              selectedBooks={this.state.selectedBooks}
                               changeSelection={this.changeSelectedBooks} />
-                </div>
-                <div className="Button-row">
-                    <button className="ui button" onClick={() => this.selectAllBooks()}>
-                        Select All
-                    </button>
-                    <button className="ui primary button" onClick={() => this.loadQuestions()}>
-                        Load Questions
-                    </button>
-                    <button className="ui button" onClick={() => this.clearSelections()}>
-                        Clear Selection
-                    </button>
                 </div>
             </div>
         );
