@@ -13,7 +13,6 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.loadBooks();
-        this.changeSelectedBooks = this.changeSelectedBooks.bind(this);
     }
 
     loadBooks() {
@@ -24,7 +23,7 @@ class App extends Component {
         });
     }
 
-    changeSelectedBooks(books) {
+    changeSelectedBooks = (books) => {
         this.setState({
             selectedBooks : books,
         });
