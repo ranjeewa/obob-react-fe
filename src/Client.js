@@ -5,6 +5,14 @@ function books(cb) {
         .then(cb);
 }
 
+function questions(bookIds, cb) {
+    return fetch('/api/questions?bookIds='+bookIds,
+        {accept: 'application/json',
+        }).then(checkStatus)
+        .then(parseJSON)
+        .then(cb);
+}
+
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response;
@@ -20,5 +28,5 @@ function parseJSON(response) {
     return response.json();
 }
 
-const Client = { books };
+const Client = { books, questions };
 export default Client;

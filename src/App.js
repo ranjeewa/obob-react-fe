@@ -7,7 +7,7 @@ class App extends Component {
 
     state  = {
         allBooks : [],
-        questionIds: [],
+        questions: [],
     };
 
     constructor(props) {
@@ -24,7 +24,11 @@ class App extends Component {
     }
 
     changeSelectedBooks = (books) => {
-        console.log(books);
+        Client.questions(books, response => {
+            this.setState({
+                questions: response.slice(0),
+            });
+        });
     }
 
     render() {
