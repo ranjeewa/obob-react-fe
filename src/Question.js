@@ -64,7 +64,7 @@ class Question extends Component {
                             <button className="ui primary button" onClick={() => this.chooseNextQuestion()}>
                                 Next Question
                             </button>
-                            <button className="ui primary button" onClick={() => this.showBooks()}>
+                            <button className="ui button" onClick={() => this.props.reset()}>
                                 Back to Books
                             </button>
                         </div>
@@ -72,7 +72,7 @@ class Question extends Component {
             } else {
                 answer =
                     <div className="Button-row">
-                        <button className="ui primary button" onClick={() => this.showAnswer()}>
+                        <button className="ui button" onClick={() => this.showAnswer()}>
                             Show Answer
                         </button>
                     </div>
@@ -81,7 +81,7 @@ class Question extends Component {
             //no more questions
             answer =
                 <div className="Button-row">
-                    <button className="ui primary button" onClick={() => this.showBooks()}>
+                    <button className="ui primary button" onClick={() => this.props.reset()}>
                         Back to Books
                     </button>
                 </div>;

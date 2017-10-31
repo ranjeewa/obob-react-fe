@@ -20,6 +20,7 @@ class App extends Component {
         Client.books(books => {
             this.setState({
                 allBooks: books.slice(0),
+                questions: [],
             });
         });
     }
@@ -32,6 +33,12 @@ class App extends Component {
         });
     }
 
+    clearQuestions() {
+        this.setState( {
+            questions: [],
+        });
+    }
+
     render() {
 
         let title = null;
@@ -41,7 +48,8 @@ class App extends Component {
                 OBOB questions
             </p>;
             app = <Question questions = {this.state.questions}
-                            books = {this.state.allBooks} />;
+                            books = {this.state.allBooks}
+                            reset = {() => this.clearQuestions()} />;
         } else {
             title = <p className="App-intro">
                 OBOB books
