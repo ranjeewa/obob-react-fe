@@ -8,9 +8,12 @@ class Question extends Component {
 
         let nextQ = Question.getRandomNumber(this.props.questions.length);
         this.state = {
-            showAnswer: false,
             nextQuestion: this.props.questions[nextQ],
             questions : this.props.questions.splice(nextQ, 1),
+            showAnswer: false,
+            numCorrect: 0,
+            numAsked: 0,
+            totalQuestions: this.props.questions.length + 1,
         };
     }
 
@@ -18,7 +21,18 @@ class Question extends Component {
         return Math.floor(Math.random() * n);
     }
 
+    markCorrect() {
+        this.setState( {
+            numCorrect: ++this.state.numCorrect,
+        });
+        this.chooseNextQuestion();
+    }
+
     chooseNextQuestion() {
+        this.setState( {
+            numAsked: ++this.state.numAsked,
+        });
+
         let numQuestions = this.state.questions.length;
         if (numQuestions > 0) {
             let nextQuestionId = Question.getRandomNumber(numQuestions);
@@ -42,27 +56,37 @@ class Question extends Component {
 
     render() {
         let question = null;
-        let answer = null;
-
+        let answerPanel = null;
         let questionPanel = null;
 
         if (this.state.nextQuestion) {
             question = this.state.nextQuestion;
             questionPanel =
                 <div className="ui one column grid">
-                    <div className="left floated one column row">{question.question}</div>
+                    <div className="left floated one column row">
+                        <div className="ui horizontal label">Q:</div>
+                        {question.question}
+                        </div>
                 </div>;
             if (this.state.showAnswer) {
-                answer =
+                answerPanel =
                     <div id="answer">
                         <div className="ui two column grid">
-                            <div className="left floated two column row">{question.answer}</div>
-                            <div className="column">{this.props.books[question.bookId - 1].name}</div>
-                            <div className="column">Page {question.pageNumber}</div>
+                            <div className="left floated two column row">
+                                <div className="ui horizontal label">A:</div>
+                                {question.answer}
+                                </div>
+
+                            <div className="column"><div className="ui horizontal label">Book</div>  {this.props.books[question.bookId - 1].name}</div>
+
+                            <div className="column"><div className="ui horizontal label">Page</div>  {question.pageNumber}</div>
                         </div>
                         <div className="Button-row">
-                            <button className="ui primary button" onClick={() => this.chooseNextQuestion()}>
-                                Next Question
+                            <button className="positive ui button" onClick={() => this.markCorrect()}>
+                                I got it right!
+                            </button>
+                            <button className="negative ui button" onClick={() => this.chooseNextQuestion()}>
+                                I got it wrong!
                             </button>
                             <button className="ui button" onClick={() => this.props.reset()}>
                                 Back to Books
@@ -70,7 +94,7 @@ class Question extends Component {
                         </div>
                     </div>
             } else {
-                answer =
+                answerPanel =
                     <div className="Button-row">
                         <button className="ui button" onClick={() => this.showAnswer()}>
                             Show Answer
@@ -79,7 +103,7 @@ class Question extends Component {
             }
         } else {
             //no more questions
-            answer =
+            answerPanel =
                 <div className="Button-row">
                     <button className="ui primary button" onClick={() => this.props.reset()}>
                         Back to Books
@@ -87,10 +111,16 @@ class Question extends Component {
                 </div>;
         }
 
+        let statsPanel =
+            <div>
+                Score so far : {this.state.numCorrect} of {this.state.numAsked}, {this.state.totalQuestions} total questions
+            </div>
+
         return (
             <div id="question">
                 {questionPanel}
-                {answer}
+                {answerPanel}
+                {statsPanel}
             </div>
         );
     }
