@@ -48,17 +48,6 @@ class BookList extends Component {
 
         return (
             <div id="book-list">
-                <table className="ui selectable structured large table">
-                    <thead>
-                    <tr>
-                        <th className="one wide">Name</th>
-                        <th className="one wide">Author</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {bookRows}
-                    </tbody>
-                </table>
                 <div className="Button-row">
                     <button className="ui button" onClick={() => this.selectAllBooks()}>
                         Select All
@@ -70,6 +59,17 @@ class BookList extends Component {
                         Clear Selection
                     </button>
                 </div>
+                <table className="ui selectable structured large table">
+                    <thead>
+                    <tr>
+                        <th className="one wide">Name</th>
+                        <th className="one wide">Author</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {bookRows}
+                    </tbody>
+                </table>
             </div>
 
         );

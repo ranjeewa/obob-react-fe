@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Client from './Client';
 import BookList from './BookList';
+import Question from "./Question";
 
 class App extends Component {
 
@@ -33,14 +34,27 @@ class App extends Component {
 
     render() {
 
+        let title = null;
+        let app = null;
+        if (this.state.questions.length > 0) {
+            title = <p className="App-intro">
+                OBOB questions
+            </p>;
+            app = <Question questions = {this.state.questions}
+                            books = {this.state.allBooks} />;
+        } else {
+            title = <p className="App-intro">
+                OBOB books
+            </p>;
+            app = <BookList allBooks={this.state.allBooks}
+                            changeSelection={this.changeSelectedBooks} />
+        }
+
         return (
             <div className="App">
-                <p className="App-intro">
-                    OBOB books
-                </p>
+                {title}
                 <div className="ui text container">
-                    <BookList allBooks={this.state.allBooks}
-                              changeSelection={this.changeSelectedBooks} />
+                    {app}
                 </div>
             </div>
         );
