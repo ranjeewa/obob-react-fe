@@ -71,15 +71,15 @@ class Question extends Component {
             if (this.state.showAnswer) {
                 answerPanel =
                     <div id="answer">
-                        <div className="ui two column grid">
-                            <div className="left floated two column row">
+                        <div className="ui one column grid">
+                            <div className="left floated one column row">
                                 <div className="ui horizontal label">A:</div>
                                 {question.answer}
                                 </div>
 
-                            <div className="column"><div className="ui horizontal label">Book</div>  {this.props.books[question.bookId - 1].name}</div>
+                            <div className="left floated one column row"><div className="ui horizontal label">Book</div>  {this.props.books[question.bookId - 1].name}</div>
 
-                            <div className="column"><div className="ui horizontal label">Page</div>  {question.pageNumber}</div>
+                            <div className="left floated one column row"><div className="ui horizontal label">Page</div>  {question.pageNumber}</div>
                         </div>
                         <div className="Button-row">
                             <button className="positive ui button" onClick={() => this.markCorrect()}>
@@ -113,7 +113,8 @@ class Question extends Component {
 
         let statsPanel =
             <div>
-                Score so far : {this.state.numCorrect} of {this.state.numAsked}, {this.state.totalQuestions} total questions
+                Score so far : {this.state.numCorrect} of {this.state.numAsked}<br />
+                Total questions : {this.state.totalQuestions}
             </div>
 
         return (
