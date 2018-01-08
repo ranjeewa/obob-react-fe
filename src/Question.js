@@ -63,6 +63,8 @@ class Question extends Component {
             question = this.state.nextQuestion;
             questionPanel =
                 <div className="ui one column grid">
+                    <div className="left floated one column row"><div className="ui horizontal label">Book</div>  {this.props.books[question.bookId - 1].name}</div>
+
                     <div className="left floated one column row">
                         <div className="ui horizontal label">Q:</div>
                         {question.question}
@@ -71,26 +73,34 @@ class Question extends Component {
             if (this.state.showAnswer) {
                 answerPanel =
                     <div id="answer">
+                        <div className="Button-row">
+                            <button className="negative ui button" onClick={() => this.chooseNextQuestion()}>
+                                I got it wrong!
+                            </button>
+                            <button className="positive ui button" onClick={() => this.markCorrect()}>
+                                I got it right!
+                            </button>
+                            <button className="ui button" onClick={() => this.props.reset()}>
+                                Back to Books
+                            </button>
+                        </div>
                         <div className="ui one column grid">
                             <div className="left floated one column row">
                                 <div className="ui horizontal label">A:</div>
                                 {question.answer}
                                 </div>
 
-                            <div className="left floated one column row"><div className="ui horizontal label">Book</div>  {this.props.books[question.bookId - 1].name}</div>
+                            {question.chapter &&
+                            <div className="left floated one column row">
+                                <div className="ui horizontal label">Chapter</div>
+                                {question.chapter}</div>
+                            }
+                            {question.pageNumber &&
+                            <div className="left floated one column row">
+                                <div className="ui horizontal label">Page</div>
+                                {question.pageNumber}</div>
+                            }
 
-                            <div className="left floated one column row"><div className="ui horizontal label">Page</div>  {question.pageNumber}</div>
-                        </div>
-                        <div className="Button-row">
-                            <button className="positive ui button" onClick={() => this.markCorrect()}>
-                                I got it right!
-                            </button>
-                            <button className="negative ui button" onClick={() => this.chooseNextQuestion()}>
-                                I got it wrong!
-                            </button>
-                            <button className="ui button" onClick={() => this.props.reset()}>
-                                Back to Books
-                            </button>
                         </div>
                     </div>
             } else {
