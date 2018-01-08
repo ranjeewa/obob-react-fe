@@ -26,11 +26,13 @@ class App extends Component {
     }
 
     changeSelectedBooks = (books) => {
-        Client.questions(books, response => {
-            this.setState({
-                questions: response.slice(0),
+        if (books.length > 0) {
+            Client.questions(books, response => {
+                this.setState({
+                    questions: response.slice(0),
+                });
             });
-        });
+        }
     }
 
     clearQuestions() {

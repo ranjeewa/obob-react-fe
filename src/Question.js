@@ -92,12 +92,12 @@ class Question extends Component {
                                 {question.answer}
                                 </div>
 
-                            {(question.chapter >= 0) &&
+                            {question.chapter &&
                             <div className="left floated one column row">
                                 <div className="ui horizontal label">Chapter</div>
                                 {question.chapter}</div>
                             }
-                            {(question.pageNumber >= 0 ) &&
+                            {question.pageNumber &&
                             <div className="left floated one column row">
                                 <div className="ui horizontal label">Page</div>
                                 {question.pageNumber}</div>
