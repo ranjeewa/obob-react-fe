@@ -7,9 +7,10 @@ class Question extends Component {
         super(props);
 
         let nextQ = Question.getRandomNumber(this.props.questions.length);
+        this.props.questions.splice(nextQ, 1);
         this.state = {
             nextQuestion: this.props.questions[nextQ],
-            questions : this.props.questions.splice(nextQ, 1),
+            questions : this.props.questions,
             showAnswer: false,
             numCorrect: 0,
             numAsked: 0,
@@ -36,9 +37,10 @@ class Question extends Component {
         let numQuestions = this.state.questions.length;
         if (numQuestions > 0) {
             let nextQuestionId = Question.getRandomNumber(numQuestions);
+            let nextQ = this.state.questions[nextQuestionId];
+            this.state.questions.splice(nextQuestionId, 1)
             this.setState( {
-                nextQuestion : this.props.questions[nextQuestionId],
-                questions : this.props.questions.splice(nextQuestionId, 1),
+                nextQuestion : nextQ,
                 showAnswer : false,
             });
         } else {
@@ -90,12 +92,12 @@ class Question extends Component {
                                 {question.answer}
                                 </div>
 
-                            {question.chapter &&
+                            {(question.chapter >= 0) &&
                             <div className="left floated one column row">
                                 <div className="ui horizontal label">Chapter</div>
                                 {question.chapter}</div>
                             }
-                            {question.pageNumber &&
+                            {(question.pageNumber >= 0 ) &&
                             <div className="left floated one column row">
                                 <div className="ui horizontal label">Page</div>
                                 {question.pageNumber}</div>
